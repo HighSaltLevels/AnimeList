@@ -1,0 +1,8 @@
+# Ignore .o files as well as .txt
+*.o
+*.txt
+
+# Ignore compiled binary and Makefile
+AnimeList
+Makefile
+
