@@ -1,6 +1,6 @@
 #include "AddWindow.h"
 
-AddWindow::AddWindow(QWidget* parent, bool watched, QTextEdit* unwatched_edit, QTextEdit* watched_edit) : QWidget(parent)
+AddWindow::AddWindow(bool watched) : QWidget()
 {
     name_edit = new QLineEdit(this);
     episode_edit = new QLineEdit(this);

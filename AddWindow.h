@@ -7,7 +7,7 @@
 class AddWindow : public QWidget
 {
     public:
-        AddWindow(QWidget* parent = 0, bool watched = false, QTextEdit* = NULL, QTextEdit* = NULL);
+        AddWindow(bool watched = false);
         ~AddWindow();
 
     signals:

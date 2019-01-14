@@ -59,8 +59,6 @@ std::vector<Anime_t> getList(std::string filename)
 
 void addEntry(std::string filename, Anime_t anime)
 {
-    std::cout << "Writing this Function still In Progress\n";
-
     FILE* fp = fopen(filename.c_str(), "a");
     std::string entry = "";
 
@@ -70,18 +68,40 @@ void addEntry(std::string filename, Anime_t anime)
     fclose(fp);
 }
 
-void removeEntry(std::string filename, Anime_t anime)
+void removeEntry(std::string filename, std::string anime)
 {
-    std::cout << "Writing this Function still In Progress\n";
-
+    std::cout << "filename = " << filename << " anime= " << anime << std::endl;
+    char line[50];
+    int line_num, line_index = 0;
+    char temp_file[] = "temp.txt";
     FILE* fread = fopen(filename.c_str(), "r");
-    FILE* fwrite = fopen("temp", "w");
+    FILE* fwrite = fopen(temp_file, "w");
+
+    line_num = findLine(fread, anime);
+    rewind(fread);
+    while(fgets(line, 50, fread))
+    {
+        if (line[0] == '\n')
+            break;
+        if (line_index != line_num)
+            fprintf(fwrite, "%s", line);
+        for (int i=0; i<50; i++)
+        {
+            if (line[i] == '\n')
+            {
+                line_index++;
+                break;
+            }
+        }
+    }
 
     fclose(fread);    
     fclose(fwrite);
+    remove(filename.c_str());
+    rename(temp_file, filename.c_str());
 }
 
-void editEntry(std::string filename, Anime_t old_anime, Anime_t new_anime)
+void editEntry(std::string filename, std::string old_anime, Anime_t new_anime)
 {
     std::cout << "TODO edit entry for anime here\n";
     return;
@@ -117,5 +137,82 @@ bool getAnimeVec(std::vector<std::string>* animes, std::string filename)
     }
     fclose(fp);
     return true;
+}
+
+int findLine(FILE* fp, std::string name)
+{
+    char line[50] = {0};
+    int line_num = 0;
+    std::string name_in_file;
+    while (fgets(line, 50, fp))
+    {
+        if (line[0] == '\n')
+            break;
+        for (int i=0; i<50; i++)
+        {
+            if (line[i] == '\n')
+            {
+                line_num++;
+                break;
+            }
+            if (line[i] == '|')
+                if (!name.compare(name_in_file))
+                    return line_num;
+            if (feof(fp))
+                return 0;
+            name_in_file = name_in_file + line[i];
+        }
+        name_in_file = "";
+    }
+    return -1;
+}
+
+Anime_t getAnimeByName(std::string name, std::string filename)
+{
+    Anime_t anime;
+    anime.name = name;
+    char line[50] = {0};
+    std::string working_str = "";
+    FILE* fp = fopen(filename.c_str(), "r");
+
+    while (fgets(line, 50, fp))
+    {
+        if (line[0] == '\n')
+            break;
+        for (int i=0; i<50; i++)
+        {
+            if (line[i] == '\n')
+                break;
+            if (line[i] == '|')
+                if (!name.compare(working_str))
+                {
+                    working_str = "";
+                    for (int j=i+1; j<50; j++)
+                    {
+                        if (line[j] == '|')
+                        {
+                            anime.num_episodes = stoi(working_str);
+                            working_str = "";
+                            for (int k=j+1; k<50; k++)
+                            {
+                                if (line[k] == '\n')
+                                {
+                                    anime.rating = stoi(working_str);
+                                    fclose(fp);
+                                    return anime;
+                                }
+                                working_str+=line[k];
+                            }
+                        }
+                        working_str+=line[j];
+                    }
+                }   
+            working_str+=line[i];
+        }
+        working_str = "";
+    }
+
+    fclose(fp);
+    return anime;
 }
 

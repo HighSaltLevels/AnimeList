@@ -13,10 +13,12 @@ std::vector<Anime_t> getWatchedList(void);
 std::vector<Anime_t> getUnwatchedList(void);
 std::vector<Anime_t> getList(std::string);
 void addEntry(std::string,Anime_t);
-void removeEntry(std::string,Anime_t);
-void editEntry(std::string,Anime_t,Anime_t);
+void removeEntry(std::string,std::string);
+void editEntry(std::string,std::string,Anime_t);
 void switchEntry(std::string,std::string, Anime_t);
 bool getAnimeVec(std::vector<std::string>*, std::string);
+int findLine(FILE*,std::string);
+Anime_t getAnimeByName(std::string,std::string);
 
 #endif
 

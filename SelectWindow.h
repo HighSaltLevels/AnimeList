@@ -2,11 +2,12 @@
 #define SELECTWINDOW_H
 
 #include "file_handler.h"
+#include "MainWindow.h"
 
 class SelectWindow : public QWidget
 {
     public:
-        SelectWindow(QWidget* parent = 0, int action = 0, bool watched = false, bool* success = NULL);
+        SelectWindow(int action = 0, bool watched = false, bool* success = NULL);
         ~SelectWindow();
 
     signals:
@@ -15,7 +16,9 @@ class SelectWindow : public QWidget
         void OnCancelPress();
 
     private:
-        QComboBox* selectbox;
+        QComboBox* box;
+        int class_action;
+        bool class_watched;
 };
 
 #endif
