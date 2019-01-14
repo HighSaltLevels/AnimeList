@@ -62,8 +62,11 @@ void addEntry(std::string filename, Anime_t anime)
     FILE* fp = fopen(filename.c_str(), "a");
     std::string entry = "";
 
-    anime.name.resize(43);
-    anime.name.replace(41,3,"...");
+    if (anime.name.length() > 43)
+    {
+        anime.name.resize(43);
+        anime.name.replace(41,3,"...");
+    }
     entry = anime.name + "|" + std::to_string(anime.num_episodes) + "|" + std::to_string(anime.rating) + "\n";
     fputs(entry.c_str(),fp);
 
