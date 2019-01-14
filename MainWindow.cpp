@@ -67,7 +67,8 @@ MainWindow::MainWindow() : QWidget()
 
 void MainWindow::OnUnwatchedAddPress()
 {
-    AddWindow* window = new AddWindow(false);
+    Anime_t anime;
+    AddWindow* window = new AddWindow(false, false, anime);
     window->setFixedSize(500,300);
     window->setWindowTitle("Add an Anime");
     window->setWindowIcon(QIcon("lonk.png"));
@@ -76,7 +77,8 @@ void MainWindow::OnUnwatchedAddPress()
 
 void MainWindow::OnWatchedAddPress()
 {
-    AddWindow* window = new AddWindow(true);
+    Anime_t anime;
+    AddWindow* window = new AddWindow(true, false, anime);
     window->setFixedSize(500,300);
     window->setWindowTitle("Add an Anime");
     window->setWindowIcon(QIcon("lonk.png"));

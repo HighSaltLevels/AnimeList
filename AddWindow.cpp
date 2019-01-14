@@ -1,11 +1,15 @@
 #include "AddWindow.h"
 
-AddWindow::AddWindow(bool watched) : QWidget()
+AddWindow::AddWindow(bool watched, bool edit, Anime_t anime) : QWidget()
 {
     name_edit = new QLineEdit(this);
     episode_edit = new QLineEdit(this);
     rating_edit = new QLineEdit(this);
     has_been_watched = watched;
+    class_edit = edit;
+    class_anime.name = anime.name;
+    class_anime.num_episodes = anime.num_episodes;
+    class_anime.rating = anime.rating;
 
     QString name_str = "Name:";
     QLabel* name_lbl = new QLabel(name_str, this);
@@ -20,9 +24,20 @@ AddWindow::AddWindow(bool watched) : QWidget()
     rating_lbl->setFont(QFont("Times",12));
 
     QPushButton* cancel_btn = new QPushButton("Cancel", this);
-    QPushButton* add_btn = new QPushButton("Add", this);
+    QPushButton* add_btn;
+    if (edit)
+        add_btn = new QPushButton("Update", this);
+    else
+        add_btn = new QPushButton("Add", this);
     connect(cancel_btn, &QPushButton::clicked, this, &AddWindow::OnCancelPress);
     connect(add_btn, &QPushButton::clicked, this, &AddWindow::OnAddPress);
+
+    if (edit)
+    {
+        name_edit->setText(QString::fromUtf8(anime.name.c_str()));
+        episode_edit->setText(QString::fromUtf8(std::to_string(anime.num_episodes).c_str()));
+        rating_edit->setText(QString::fromUtf8(std::to_string(anime.rating).c_str()));
+    }
 
     QGridLayout* grid = new QGridLayout();
 
@@ -41,7 +56,7 @@ AddWindow::AddWindow(bool watched) : QWidget()
 void AddWindow::OnAddPress()
 {
     std::vector<Anime_t> watched_vec, unwatched_vec;
-    std::string episode_str, rating_str;
+    std::string episode_str, rating_str, file_to_use;
     Anime_t anime;
     char* p;
 
@@ -69,15 +84,21 @@ void AddWindow::OnAddPress()
         return;
     }
     anime.rating = std::stoi(rating_str);
-    if (anime.rating < 1 || anime.rating > 10)
+    if (anime.rating < 0 || anime.rating > 10)
     {
-        QMessageBox::information(this, "Invalid Input", "The rating number must be a number between 1 and 10!", QMessageBox::Ok);
+        QMessageBox::information(this, "Invalid Input", "The rating number must be a number between 0 and 10!", QMessageBox::Ok);
         return;
     }
+
     if (has_been_watched)
-        addEntry("watched.txt", anime);
+        file_to_use = "watched.txt";
     else
-        addEntry("unwatched.txt", anime);
+        file_to_use = "unwatched.txt";
+
+    if (class_edit)
+        removeEntry(file_to_use, class_anime.name);
+        
+    addEntry(file_to_use, anime);
 
     watched_vec = getWatchedList();
     unwatched_vec = getUnwatchedList();

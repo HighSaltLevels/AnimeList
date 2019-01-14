@@ -75,7 +75,6 @@ void removeEntry(std::string filename, std::string anime)
     char temp_file[] = "temp.txt";
     FILE* fread = fopen(filename.c_str(), "r");
     FILE* fwrite = fopen(temp_file, "w");
-
     line_num = findLine(fread, anime);
     rewind(fread);
     while(fgets(line, 50, fread))
@@ -93,7 +92,6 @@ void removeEntry(std::string filename, std::string anime)
             }
         }
     }
-
     fclose(fread);    
     fclose(fwrite);
     remove(filename.c_str());
@@ -102,13 +100,12 @@ void removeEntry(std::string filename, std::string anime)
 
 void editEntry(std::string filename, std::string old_anime, Anime_t new_anime)
 {
-    std::cout << "TODO edit entry for anime here\n";
-    return;
+    removeEntry(filename, old_anime);
+    addEntry(filename, new_anime);
 }
 
 void switchEntry(std::string remove_from_filename, std::string add_to_filename, Anime_t anime)
 {
-    std::cout << "remove_from_file=" << remove_from_filename << " add_to_filename=" << add_to_filename << std::endl;
     removeEntry(remove_from_filename, anime.name);
     addEntry(add_to_filename, anime);
 }

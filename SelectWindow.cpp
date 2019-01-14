@@ -67,6 +67,7 @@ void SelectWindow::OnOkPress()
     std::string add_to_file_str = "";
     std::string rating_input = "";
     int rating = 0;
+    AddWindow* edit_window = NULL;
 
     if (class_watched)
     {
@@ -84,6 +85,11 @@ void SelectWindow::OnOkPress()
     switch (class_action)
     {
         case 0: // edit
+            edit_window = new AddWindow(class_watched, true, anime);
+            edit_window->setFixedSize(500,300);
+            edit_window->setWindowTitle("Edit an Anime");
+            edit_window->setWindowIcon(QIcon("lonk.png"));
+            edit_window->show();
             break;
 
         case 1: // remove

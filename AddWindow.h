@@ -7,7 +7,7 @@
 class AddWindow : public QWidget
 {
     public:
-        AddWindow(bool watched = false);
+        AddWindow(bool watched, bool edit, Anime_t anime);
         ~AddWindow();
 
     signals:
@@ -20,6 +20,8 @@ class AddWindow : public QWidget
         QLineEdit* episode_edit;
         QLineEdit* rating_edit;
         bool has_been_watched;
+        bool class_edit;
+        Anime_t class_anime;
 };
 
 #endif

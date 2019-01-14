@@ -3,6 +3,7 @@
 
 #include "file_handler.h"
 #include "MainWindow.h"
+#include "AddWindow.h"
 
 class SelectWindow : public QWidget
 {
