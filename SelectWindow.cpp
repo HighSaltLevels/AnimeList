@@ -35,10 +35,25 @@ SelectWindow::SelectWindow(int action, bool watched, bool* success) : QWidget()
 
     QGridLayout* grid = new QGridLayout();
 
-    grid->addWidget(msg_lbl,0,0,1,5);
-    grid->addWidget(box,1,0,1,5);
-    grid->addWidget(cancel_btn,2,0);
-    grid->addWidget(ok_btn,2,4);
+    if (action == 2)
+    {
+        QString str = "Give a rating (1-10)";
+        QLabel* rating_lbl = new QLabel(str, this);
+        rating_edit = new QLineEdit(this);
+        grid->addWidget(msg_lbl,0,0,1,5);
+        grid->addWidget(box,1,0,1,5);
+        grid->addWidget(rating_lbl,2,0,2,3);
+        grid->addWidget(rating_edit,2,2,2,4);
+        grid->addWidget(cancel_btn,4,0);
+        grid->addWidget(ok_btn,4,4);
+    }
+    else
+    {
+        grid->addWidget(msg_lbl,0,0,1,5);
+        grid->addWidget(box,1,0,1,5);
+        grid->addWidget(cancel_btn,2,0);
+        grid->addWidget(ok_btn,2,4);
+    }
 
     setLayout(grid);
     *success = true;
@@ -49,11 +64,20 @@ void SelectWindow::OnOkPress()
     std::vector<Anime_t> unwatched_vec, watched_vec;
     std::string current_text = box->currentText().toUtf8().constData();
     std::string file_str = "";
+    std::string add_to_file_str = "";
+    std::string rating_input = "";
+    int rating = 0;
 
     if (class_watched)
+    {
         file_str = "watched.txt";
+        add_to_file_str = "unwatched.txt";
+    }
     else
+    {
         file_str = "unwatched.txt";
+        add_to_file_str = "watched.txt";
+    }
 
     Anime_t anime = getAnimeByName(current_text, file_str);
 
@@ -64,8 +88,23 @@ void SelectWindow::OnOkPress()
 
         case 1: // remove
             removeEntry(file_str, anime.name);
+            break;
 
         case 2: // move
+            rating_input = rating_edit->text().toUtf8().constData();
+            if (rating_input == "")
+            {
+                QMessageBox::information(this, "Invalid Input", "Please provide a rating.", QMessageBox::Ok);
+                return;
+            }
+            rating = std::stoi(rating_edit->text().toUtf8().constData());
+            if (rating < 0 || rating > 10)
+            {
+                QMessageBox::information(this, "Invalid Input", "The rating number must be a number between 1 and 10!", QMessageBox::Ok);
+                return;
+            }
+            anime.rating = rating;
+            switchEntry(file_str, add_to_file_str, anime);
             break;
 
         default: break;

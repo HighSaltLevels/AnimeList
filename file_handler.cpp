@@ -70,7 +70,6 @@ void addEntry(std::string filename, Anime_t anime)
 
 void removeEntry(std::string filename, std::string anime)
 {
-    std::cout << "filename = " << filename << " anime= " << anime << std::endl;
     char line[50];
     int line_num, line_index = 0;
     char temp_file[] = "temp.txt";
@@ -109,8 +108,9 @@ void editEntry(std::string filename, std::string old_anime, Anime_t new_anime)
 
 void switchEntry(std::string remove_from_filename, std::string add_to_filename, Anime_t anime)
 {
-    std::cout << "TODO switch entry for anime here\n";
-    return;
+    std::cout << "remove_from_file=" << remove_from_filename << " add_to_filename=" << add_to_filename << std::endl;
+    removeEntry(remove_from_filename, anime.name);
+    addEntry(add_to_filename, anime);
 }
 
 bool getAnimeVec(std::vector<std::string>* animes, std::string filename)

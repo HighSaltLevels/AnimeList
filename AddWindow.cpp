@@ -69,7 +69,7 @@ void AddWindow::OnAddPress()
         return;
     }
     anime.rating = std::stoi(rating_str);
-    if (anime.rating < 1 || anime.rating > 999999)
+    if (anime.rating < 1 || anime.rating > 10)
     {
         QMessageBox::information(this, "Invalid Input", "The rating number must be a number between 1 and 10!", QMessageBox::Ok);
         return;

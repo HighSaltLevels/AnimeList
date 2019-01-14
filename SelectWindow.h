@@ -17,6 +17,7 @@ class SelectWindow : public QWidget
 
     private:
         QComboBox* box;
+        QLineEdit* rating_edit;
         int class_action;
         bool class_watched;
 };
