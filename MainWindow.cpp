@@ -195,7 +195,7 @@ void loadLists(std::vector<Anime_t> unwatched_vec, std::vector<Anime_t> watched_
 
     for (unsigned int i=0; i < watched_vec.size(); i++)
     {
-        name = parseItem(watched_vec[i].name, 45, 21, '|');
+        name = parseItem(watched_vec[i].name, 44, 21, '|');
         num_episodes = parseItem(std::to_string(watched_vec[i].num_episodes),9,3,'|');
         rating = parseItem(std::to_string(watched_vec[i].rating),7,2,' ');
         text.append(QString::fromUtf8(name.c_str()));
