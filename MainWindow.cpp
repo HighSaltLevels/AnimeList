@@ -178,14 +178,14 @@ void MainWindow::OnWatchedEditPress()
 void loadLists(std::vector<Anime_t> unwatched_vec, std::vector<Anime_t> watched_vec)
 {
     std::string name, num_episodes, rating;
-    QString orig_text = "--------------------Name--------------------|Episodes|Rating\n\n";
+    QString orig_text = "--------------------Name-------------------|Episodes|Rating\n\n";
     QString text = orig_text;
 
     for(unsigned int i=0; i < unwatched_vec.size(); i++)
     {
-        name = parseItem(unwatched_vec[i].name, 45, 21, '|');
+        name = parseItem(unwatched_vec[i].name, 44, 21, '|');
         num_episodes = parseItem(std::to_string(unwatched_vec[i].num_episodes),9,3,'|');
-        rating = parseItem(std::to_string(unwatched_vec[i].rating),7,2,' ');
+        rating = parseItem(std::to_string(unwatched_vec[i].rating),6,1,' ');
         text.append(QString::fromUtf8(name.c_str()));
         text.append(QString::fromUtf8(num_episodes.c_str()));
         text.append(QString::fromUtf8(rating.c_str()));
