@@ -3,8 +3,8 @@
 
 #include "widgets.h"
 
-#define WATCHEDPATH (std::string(getenv("HOME") + std::string("/.animelist/watched.txt")))
-#define UNWATCHEDPATH (std::string(getenv("HOME") + std::string("/.animelist/unwatched.txt")))
+#define WATCHEDPATH "/usr/lib/animelist/watched.txt"
+#define UNWATCHEDPATH "/usr/lib/animelist/unwatched.txt"
 #define ICONPATH "/usr/lib/animelist/icon.png"
 
 typedef struct {
