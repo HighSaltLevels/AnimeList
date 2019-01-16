@@ -13,9 +13,9 @@ SelectWindow::SelectWindow(int action, bool watched, bool* success) : QWidget()
     QLabel* msg_lbl = new QLabel(msg, this);
 
     if (watched)
-        result = getAnimeVec(&animes, "watched.txt");
+        result = getAnimeVec(&animes, WATCHEDPATH);
     else
-        result = getAnimeVec(&animes, "unwatched.txt");
+        result = getAnimeVec(&animes, UNWATCHEDPATH);
 
     if (!result)
     {
@@ -71,13 +71,13 @@ void SelectWindow::OnOkPress()
 
     if (class_watched)
     {
-        file_str = "watched.txt";
-        add_to_file_str = "unwatched.txt";
+        file_str = WATCHEDPATH;
+        add_to_file_str = UNWATCHEDPATH;
     }
     else
     {
-        file_str = "unwatched.txt";
-        add_to_file_str = "watched.txt";
+        file_str = UNWATCHEDPATH;
+        add_to_file_str = WATCHEDPATH;
     }
 
     Anime_t anime = getAnimeByName(current_text, file_str);
@@ -88,7 +88,7 @@ void SelectWindow::OnOkPress()
             edit_window = new AddWindow(class_watched, true, anime);
             edit_window->setFixedSize(500,300);
             edit_window->setWindowTitle("Edit an Anime");
-            edit_window->setWindowIcon(QIcon("lonk.png"));
+            edit_window->setWindowIcon(QIcon(ICONPATH));
             edit_window->show();
             break;
 

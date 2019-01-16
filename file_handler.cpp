@@ -2,12 +2,12 @@
 
 std::vector<Anime_t> getUnwatchedList(void)
 {
-    return getList("unwatched.txt"); //TODO find good place to put this file
+    return getList(UNWATCHEDPATH);
 }
 
 std::vector<Anime_t> getWatchedList(void)
 {
-    return getList("watched.txt"); // TODO find a good place to put this file
+    return getList(WATCHEDPATH);
 }
 
 std::vector<Anime_t> getList(std::string filename)

@@ -71,7 +71,7 @@ void MainWindow::OnUnwatchedAddPress()
     AddWindow* window = new AddWindow(false, false, anime);
     window->setFixedSize(500,300);
     window->setWindowTitle("Add an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     window->show();
 }
 
@@ -81,7 +81,7 @@ void MainWindow::OnWatchedAddPress()
     AddWindow* window = new AddWindow(true, false, anime);
     window->setFixedSize(500,300);
     window->setWindowTitle("Add an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     window->show();
 }
 
@@ -91,7 +91,7 @@ void MainWindow::OnUnwatchedRemovePress()
     SelectWindow* window = new SelectWindow(1,false, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Select an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();
@@ -106,7 +106,7 @@ void MainWindow::OnWatchedRemovePress()
     SelectWindow* window = new SelectWindow(1,true, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Select an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();
@@ -121,7 +121,7 @@ void MainWindow::OnUnwatchedMovePress()
     SelectWindow* window = new SelectWindow(2,false, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Move an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();
@@ -136,7 +136,7 @@ void MainWindow::OnWatchedMovePress()
     SelectWindow* window = new SelectWindow(2,true, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Move an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();
@@ -151,7 +151,7 @@ void MainWindow::OnUnwatchedEditPress()
     SelectWindow* window = new SelectWindow(0,false, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Select an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();
@@ -166,7 +166,7 @@ void MainWindow::OnWatchedEditPress()
     SelectWindow* window = new SelectWindow(0,true, &result);
     window->setFixedSize(300,150);
     window->setWindowTitle("Select an Anime");
-    window->setWindowIcon(QIcon("lonk.png"));
+    window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
     {
         window->close();

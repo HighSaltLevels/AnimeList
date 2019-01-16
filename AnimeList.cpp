@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 
     window.setFixedSize(1000,500);
     window.setWindowTitle("Anime List");
-    window.setWindowIcon(QIcon("lonk.png"));
+    window.setWindowIcon(QIcon(ICONPATH));
     window.show();
 
     return app.exec();

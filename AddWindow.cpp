@@ -91,9 +91,9 @@ void AddWindow::OnAddPress()
     }
 
     if (has_been_watched)
-        file_to_use = "watched.txt";
+        file_to_use = WATCHEDPATH;
     else
-        file_to_use = "unwatched.txt";
+        file_to_use = UNWATCHEDPATH;
 
     if (class_edit)
         removeEntry(file_to_use, class_anime.name);

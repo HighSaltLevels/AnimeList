@@ -3,6 +3,10 @@
 
 #include "widgets.h"
 
+#define WATCHEDPATH (std::string(getenv("HOME") + std::string("/.animelist/watched.txt")))
+#define UNWATCHEDPATH (std::string(getenv("HOME") + std::string("/.animelist/unwatched.txt")))
+#define ICONPATH "/usr/lib/animelist/icon.png"
+
 typedef struct {
     std::string name;
     int num_episodes;
