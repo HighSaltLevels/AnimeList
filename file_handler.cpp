@@ -77,30 +77,22 @@ void removeEntry(std::string filename, std::string anime)
 {
     char line[60];
     int line_num, line_index = 0;
-    char temp_file[] = "temp.txt";
+
+    std::string file_str = "";
     FILE* fread = fopen(filename.c_str(), "r");
-    FILE* fwrite = fopen(temp_file, "w");
     line_num = findLine(fread, anime);
     rewind(fread);
+
     while(fgets(line, 60, fread))
     {
-        if (line[0] == '\n')
-            break;
         if (line_index != line_num)
-            fprintf(fwrite, "%s", line);
-        for (int i=0; i<60; i++)
-        {
-            if (line[i] == '\n')
-            {
-                line_index++;
-                break;
-            }
-        }
+            file_str+=line;
+        line_index++;
     }
-    fclose(fread);    
+    fclose(fread);
+    FILE* fwrite = fopen(filename.c_str(), "w");
+    fprintf(fwrite, "%s", file_str.c_str());
     fclose(fwrite);
-    remove(filename.c_str());
-    rename(temp_file, filename.c_str());
 }
 
 void editEntry(std::string filename, std::string old_anime, Anime_t new_anime)
