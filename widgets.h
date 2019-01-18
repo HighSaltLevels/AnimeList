@@ -14,6 +14,7 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include <QCheckBox>
 #include <iostream>
 #include <cstdio>
 #include <vector>

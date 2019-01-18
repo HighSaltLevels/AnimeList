@@ -23,7 +23,7 @@ SelectWindow::SelectWindow(int action, bool watched, bool* success) : QWidget()
         *success = false;
         return;
     }
-    for (unsigned int i=0; i < animes.size(); i++)
+    for (int i=animes.size()-1; i>=0; i--)
     {
         box->addItem(QString::fromUtf8(animes[i].c_str()));
     }

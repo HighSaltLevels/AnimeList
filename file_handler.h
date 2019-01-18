@@ -20,7 +20,7 @@ void addEntry(std::string,Anime_t);
 void removeEntry(std::string,std::string);
 void editEntry(std::string,std::string,Anime_t);
 void switchEntry(std::string,std::string, Anime_t);
-void sortList(bool,int);
+void sortList(bool,int,bool);
 void overwriteFile(std::string,std::vector<Anime_t>);
 bool getAnimeVec(std::vector<std::string>*, std::string);
 int findLine(FILE*,std::string);

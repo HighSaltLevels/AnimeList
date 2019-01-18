@@ -18,6 +18,9 @@ SortWindow::SortWindow(bool watched)
     vbox->addStretch(1);
     radio_group->setLayout(vbox);
 
+    sort_box = new QCheckBox("Sort Lowest\nto Highest");
+    sort_box->setChecked(true);
+
     QPushButton* cancel_btn = new QPushButton("Cancel", this);
     QPushButton* sort_btn = new QPushButton("Sort", this);
 
@@ -25,7 +28,8 @@ SortWindow::SortWindow(bool watched)
     connect(sort_btn, &QPushButton::clicked, this, &SortWindow::OnSortPress);
 
     QGridLayout* grid = new QGridLayout(this);
-    grid->addWidget(radio_group,0,0,0,1);
+    grid->addWidget(radio_group,0,0);
+    grid->addWidget(sort_box,0,1);
     grid->addWidget(cancel_btn,1,0);
     grid->addWidget(sort_btn,1,1);
 
@@ -48,7 +52,7 @@ void SortWindow::OnSortPress()
     else
         sort_type = 2;
 
-    sortList(class_watched, sort_type);
+    sortList(class_watched, sort_type, sort_box->isChecked());
     this->close();
 }
 

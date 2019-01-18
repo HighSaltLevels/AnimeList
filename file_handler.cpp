@@ -108,12 +108,12 @@ void switchEntry(std::string remove_from_filename, std::string add_to_filename, 
     addEntry(add_to_filename, anime);
 }
 
-void sortList(bool watched, int sort_type)
+void sortList(bool watched, int sort_type, bool low_to_high)
 {
     std::vector<Anime_t> unsorted_anime, sorted_anime, other_vec;
     std::vector<Anime_t>::iterator it = sorted_anime.begin();
     std::string original1, original2, lower_str, compare_str;
-    int smallest, size;
+    int current, size;
 
     if (watched)
     {
@@ -133,46 +133,83 @@ void sortList(bool watched, int sort_type)
         case 0:
             for(int i=0; i<size; i++)
             {
-                smallest = 0;
-                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                current = 0;
+                if (low_to_high)
                 {
-                    original1 = unsorted_anime[j].name;
-                    original2 = unsorted_anime[smallest].name;
-                    std::transform(original1.begin(),original1.end(),original1.begin(), ::tolower);
-                    std::transform(original2.begin(),original2.end(),original2.begin(), ::tolower);
-                    if (original1 < original2)
-                        smallest = j;
+                    for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                    {
+                        original1 = unsorted_anime[j].name;
+                        original2 = unsorted_anime[current].name;
+                        std::transform(original1.begin(),original1.end(),original1.begin(), ::tolower);
+                        std::transform(original2.begin(),original2.end(),original2.begin(), ::tolower);
+                        if (original1 < original2)
+                            current = j;
+                    }
                 }
-                it = sorted_anime.insert(it,unsorted_anime[smallest]);
-                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+                else
+                {
+                    for (int j=unsorted_anime.size()-1; j>=0; j--)
+                    {
+                        original1 = unsorted_anime[j].name;
+                        original2 = unsorted_anime[current].name;
+                        std::transform(original1.begin(),original1.end(),original1.begin(), ::tolower);
+                        std::transform(original2.begin(),original2.end(),original2.begin(), ::tolower);
+                        if (original1 > original2)
+                            current = j;
+                    }
+                }
+                it = sorted_anime.insert(it,unsorted_anime[current]);
+                unsorted_anime.erase(unsorted_anime.begin()+current);
             }
             break;
 
         case 1:
             for(int i=0; i<size;  i++)
             {
-                smallest = 0;
-                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                current = 0;
+                if (low_to_high)
                 {
-                    if (unsorted_anime[j].num_episodes < unsorted_anime[smallest].num_episodes)
-                        smallest = j;
+                    for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                    {
+                        if (unsorted_anime[j].num_episodes < unsorted_anime[current].num_episodes)
+                            current = j;
+                    }
                 }
-                it = sorted_anime.insert(it,unsorted_anime[smallest]);
-                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+                else
+                {
+                    for (int j=unsorted_anime.size()-1; j>=0; j--)
+                    {
+                        if (unsorted_anime[j].num_episodes > unsorted_anime[current].num_episodes)
+                            current = j;
+                    }
+                }
+                it = sorted_anime.insert(it,unsorted_anime[current]);
+                unsorted_anime.erase(unsorted_anime.begin()+current);
             }
             break;
 
         case 2:
             for (int i=0; i<size; i++)
             {
-                smallest = 0;
-                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                current = 0;
+                if (low_to_high)
                 {
-                    if (unsorted_anime[j].rating < unsorted_anime[smallest].rating)
-                        smallest = j;
+                    for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                    {
+                        if (unsorted_anime[j].rating < unsorted_anime[current].rating)
+                            current = j;
+                    }
                 }
-                it = sorted_anime.insert(it,unsorted_anime[smallest]);
-                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+                else
+                {
+                    for (int j=unsorted_anime.size()-1; j>=0; j--)
+                    {
+                        if (unsorted_anime[j].rating > unsorted_anime[current].rating)
+                            current = j;
+                    }
+                }
+                it = sorted_anime.insert(it,unsorted_anime[current]);
+                unsorted_anime.erase(unsorted_anime.begin()+current);
             }
             break;
 

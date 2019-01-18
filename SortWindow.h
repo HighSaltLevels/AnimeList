@@ -19,6 +19,7 @@ class SortWindow : public QWidget
         QRadioButton* name_radio;
         QRadioButton* episodes_radio;
         QRadioButton* rating_radio;
+        QCheckBox* sort_box;
         bool class_watched;
 
 };
