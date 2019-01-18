@@ -29,7 +29,8 @@ MainWindow::MainWindow() : QWidget()
 
     loadLists(unwatched_vec, watched_vec);
 
-    QPushButton* add_unwatched = new QPushButton("Add",this);
+    QPushButton* sort_unwatched = new QPushButton("Sort List", this);
+    QPushButton* add_unwatched = new QPushButton("Add", this);
     QPushButton* remove_unwatched = new QPushButton("Remove", this);
     QPushButton* move_unwatched = new QPushButton("Move to Watched >>", this);
     QPushButton* edit_unwatched = new QPushButton("Edit", this);
@@ -37,6 +38,7 @@ MainWindow::MainWindow() : QWidget()
     QPushButton* move_watched = new QPushButton("<< Move to Unwatched", this);
     QPushButton* remove_watched = new QPushButton("Remove", this);
     QPushButton* add_watched = new QPushButton("Add", this);
+    QPushButton* sort_watched = new QPushButton("Sort List", this);
 
     QGridLayout* grid = new QGridLayout();
 
@@ -48,6 +50,8 @@ MainWindow::MainWindow() : QWidget()
     connect(move_watched, &QPushButton::clicked, this, &MainWindow::OnWatchedMovePress);
     connect(edit_unwatched, &QPushButton::clicked, this, &MainWindow::OnUnwatchedEditPress);
     connect(edit_watched, &QPushButton::clicked, this, &MainWindow::OnWatchedEditPress);
+    connect(sort_unwatched, &QPushButton::clicked, this, &MainWindow::OnUnwatchedSortPress);
+    connect(sort_watched, &QPushButton::clicked, this, &MainWindow::OnWatchedSortPress);
 
     grid->addWidget(unwatched_lbl,0,0);
     grid->addWidget(watched_lbl,0,1);
@@ -61,6 +65,8 @@ MainWindow::MainWindow() : QWidget()
     grid->addWidget(remove_watched,4,1);
     grid->addWidget(move_unwatched,5,0);
     grid->addWidget(move_watched,5,1);
+    grid->addWidget(sort_unwatched,6,0);
+    grid->addWidget(sort_watched,6,1);
 
     setLayout(grid);
 }
@@ -89,7 +95,7 @@ void MainWindow::OnUnwatchedRemovePress()
 {
     bool result;
     SelectWindow* window = new SelectWindow(1,false, &result);
-    window->setFixedSize(300,150);
+    window->setFixedSize(300,125);
     window->setWindowTitle("Select an Anime");
     window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
@@ -104,7 +110,7 @@ void MainWindow::OnWatchedRemovePress()
 {
     bool result;
     SelectWindow* window = new SelectWindow(1,true, &result);
-    window->setFixedSize(300,150);
+    window->setFixedSize(300,125);
     window->setWindowTitle("Select an Anime");
     window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
@@ -149,7 +155,7 @@ void MainWindow::OnUnwatchedEditPress()
 {
     bool result;
     SelectWindow* window = new SelectWindow(0,false, &result);
-    window->setFixedSize(300,150);
+    window->setFixedSize(300,125);
     window->setWindowTitle("Select an Anime");
     window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
@@ -164,7 +170,7 @@ void MainWindow::OnWatchedEditPress()
 {
     bool result;
     SelectWindow* window = new SelectWindow(0,true, &result);
-    window->setFixedSize(300,150);
+    window->setFixedSize(300,125);
     window->setWindowTitle("Select an Anime");
     window->setWindowIcon(QIcon(ICONPATH));
     if (!result)
@@ -175,13 +181,33 @@ void MainWindow::OnWatchedEditPress()
     window->show();
 }
 
+void MainWindow::OnUnwatchedSortPress()
+{
+    SortWindow* window = new SortWindow(false);
+    window->setFixedSize(300,175);
+    window->setWindowTitle("Sort List");
+    window->setWindowIcon(QIcon(ICONPATH));
+
+    window->show();
+}
+
+void MainWindow::OnWatchedSortPress()
+{
+    SortWindow* window = new SortWindow(true);
+    window->setFixedSize(300,175);
+    window->setWindowTitle("Sort List");
+    window->setWindowIcon(QIcon(ICONPATH));
+
+    window->show();
+}
+
 void loadLists(std::vector<Anime_t> unwatched_vec, std::vector<Anime_t> watched_vec)
 {
     std::string name, num_episodes, rating;
     QString orig_text = "--------------------Name-------------------|Episodes|Rating\n\n";
     QString text = orig_text;
 
-    for(unsigned int i=0; i < unwatched_vec.size(); i++)
+    for(int i=unwatched_vec.size()-1; i>=0; i--)
     {
         name = parseItem(unwatched_vec[i].name, 44, 21, '|');
         num_episodes = parseItem(std::to_string(unwatched_vec[i].num_episodes),9,3,'|');
@@ -193,7 +219,7 @@ void loadLists(std::vector<Anime_t> unwatched_vec, std::vector<Anime_t> watched_
     unwatched_edit->setText(text);
     text = orig_text;
 
-    for (unsigned int i=0; i < watched_vec.size(); i++)
+    for (int i=watched_vec.size()-1; i>=0; i--)
     {
         name = parseItem(watched_vec[i].name, 44, 21, '|');
         num_episodes = parseItem(std::to_string(watched_vec[i].num_episodes),9,3,'|');

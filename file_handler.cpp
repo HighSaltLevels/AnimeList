@@ -1,4 +1,5 @@
 #include "file_handler.h"
+#include "MainWindow.h"
 
 std::vector<Anime_t> getUnwatchedList(void)
 {
@@ -107,6 +108,103 @@ void switchEntry(std::string remove_from_filename, std::string add_to_filename, 
     addEntry(add_to_filename, anime);
 }
 
+void sortList(bool watched, int sort_type)
+{
+    std::vector<Anime_t> unsorted_anime, sorted_anime, other_vec;
+    std::vector<Anime_t>::iterator it = sorted_anime.begin();
+    std::string original1, original2, lower_str, compare_str;
+    int smallest, size;
+
+    if (watched)
+    {
+        unsorted_anime = getList(WATCHEDPATH);
+        other_vec = getList(UNWATCHEDPATH);
+    }
+    else
+    {
+        unsorted_anime = getList(UNWATCHEDPATH);
+        other_vec = getList(WATCHEDPATH);
+    }
+    size = unsorted_anime.size();
+
+    // Selection Sort TODO: see if insertion sort or quick sort is faster
+    switch (sort_type)
+    {
+        case 0:
+            for(int i=0; i<size; i++)
+            {
+                smallest = 0;
+                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                {
+                    original1 = unsorted_anime[j].name;
+                    original2 = unsorted_anime[smallest].name;
+                    std::transform(original1.begin(),original1.end(),original1.begin(), ::tolower);
+                    std::transform(original2.begin(),original2.end(),original2.begin(), ::tolower);
+                    if (original1 < original2)
+                        smallest = j;
+                }
+                it = sorted_anime.insert(it,unsorted_anime[smallest]);
+                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+            }
+            break;
+
+        case 1:
+            for(int i=0; i<size;  i++)
+            {
+                smallest = 0;
+                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                {
+                    if (unsorted_anime[j].num_episodes < unsorted_anime[smallest].num_episodes)
+                        smallest = j;
+                }
+                it = sorted_anime.insert(it,unsorted_anime[smallest]);
+                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+            }
+            break;
+
+        case 2:
+            for (int i=0; i<size; i++)
+            {
+                smallest = 0;
+                for (unsigned int j=0; j<unsorted_anime.size(); j++)
+                {
+                    if (unsorted_anime[j].rating < unsorted_anime[smallest].rating)
+                        smallest = j;
+                }
+                it = sorted_anime.insert(it,unsorted_anime[smallest]);
+                unsorted_anime.erase(unsorted_anime.begin()+smallest);
+            }
+            break;
+
+        default: break;
+    }
+    if (watched)
+    {
+        overwriteFile(WATCHEDPATH, sorted_anime);
+        loadLists(other_vec, sorted_anime);
+    }
+    else
+    {
+        overwriteFile(UNWATCHEDPATH, sorted_anime);
+        loadLists(sorted_anime, other_vec);
+    }
+}
+
+void overwriteFile(std::string filename, std::vector<Anime_t> anime_vec)
+{
+    FILE* fp = fopen(filename.c_str(), "w");
+    std::string line = "";
+    for (int i=anime_vec.size()-1; i>=0; i--)
+    {
+        line+=anime_vec[i].name + '|';
+        line+=std::to_string(anime_vec[i].num_episodes) + '|';
+        line+=std::to_string(anime_vec[i].rating) + '\n';
+        fprintf(fp, "%s", line.c_str());
+        line = "";
+    }
+    fclose(fp);
+}
+
 bool getAnimeVec(std::vector<std::string>* animes, std::string filename)
 {
     FILE* fp = fopen(filename.c_str(), "r");
@@ -118,7 +216,7 @@ bool getAnimeVec(std::vector<std::string>* animes, std::string filename)
         return false;
     while(fgets(line, 60, fp))
     {
-        if (line[0]  == '\n')
+        if (line[0] == '\n')
             break;
         for (int i=0; i<60; i++)
         {

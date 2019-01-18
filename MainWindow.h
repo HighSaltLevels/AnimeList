@@ -4,6 +4,7 @@
 #include "file_handler.h"
 #include "AddWindow.h"
 #include "SelectWindow.h"
+#include "SortWindow.h"
 
 class MainWindow : public QWidget
 {
@@ -23,6 +24,8 @@ class MainWindow : public QWidget
         void OnUnwatchedMovePress();
         void OnWatchedEditPress();
         void OnUnwatchedEditPress();
+        void OnWatchedSortPress();
+        void OnUnwatchedSortPress();
 };
 
 void loadLists(std::vector<Anime_t>,std::vector<Anime_t>);

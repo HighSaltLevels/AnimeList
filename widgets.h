@@ -11,11 +11,15 @@
 #include <QMessageBox>
 #include <QTextEdit>
 #include <QApplication>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QVBoxLayout>
 #include <iostream>
 #include <cstdio>
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <algorithm>
 
 #endif
 

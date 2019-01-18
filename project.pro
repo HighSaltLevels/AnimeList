@@ -14,6 +14,7 @@ SOURCES += MainWindow.cpp
 SOURCES += file_handler.cpp
 SOURCES += AddWindow.cpp
 SOURCES += SelectWindow.cpp
+SOURCES += SortWindow.cpp
 
 QT += widgets
 
