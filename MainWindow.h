@@ -16,6 +16,7 @@ class MainWindow : public QWidget
 
     signals:
     public slots:
+        void OnClosePress();
         void OnWatchedAddPress();
         void OnUnwatchedAddPress();
         void OnWatchedRemovePress();

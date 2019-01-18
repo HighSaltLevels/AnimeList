@@ -29,6 +29,7 @@ MainWindow::MainWindow() : QWidget()
 
     loadLists(unwatched_vec, watched_vec);
 
+    QPushButton* close_btn = new QPushButton("Close",this);
     QPushButton* sort_unwatched = new QPushButton("Sort List", this);
     QPushButton* add_unwatched = new QPushButton("Add", this);
     QPushButton* remove_unwatched = new QPushButton("Remove", this);
@@ -42,6 +43,7 @@ MainWindow::MainWindow() : QWidget()
 
     QGridLayout* grid = new QGridLayout();
 
+    connect(close_btn, &QPushButton::clicked, this, &MainWindow::OnClosePress);
     connect(add_unwatched, &QPushButton::clicked, this, &MainWindow::OnUnwatchedAddPress);
     connect(add_watched, &QPushButton::clicked, this, &MainWindow::OnWatchedAddPress);
     connect(remove_unwatched, &QPushButton::clicked, this, &MainWindow::OnUnwatchedRemovePress);
@@ -67,8 +69,14 @@ MainWindow::MainWindow() : QWidget()
     grid->addWidget(move_watched,5,1);
     grid->addWidget(sort_unwatched,6,0);
     grid->addWidget(sort_watched,6,1);
+    grid->addWidget(close_btn,7,0,7,2);
 
     setLayout(grid);
+}
+
+void MainWindow::OnClosePress()
+{
+    this->close();
 }
 
 void MainWindow::OnUnwatchedAddPress()
