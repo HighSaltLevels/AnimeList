@@ -18,6 +18,7 @@ touch /usr/lib/animelist/watched.txt
 touch /usr/lib/animelist/unwatched.txt
 
 echo "Giving permissions for files..."
+chmod +x /usr/bin/animelist
 chmod o+rw /usr/lib/animelist/watched.txt
 chmod o+rw /usr/lib/animelist/unwatched.txt
 
